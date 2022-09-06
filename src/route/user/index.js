@@ -1,23 +1,17 @@
 const express = require("express");
-const router = express.Router();
 
 
 const makeExpressCallback = require('../../express-callback/index')
 
+const userRouter = require('./route')
 
-//users
-const {
-    fetchUsers,
-    create,
-    fetchSingleUser,
-    updateUserController,
-    deleteUserController
-} = require('../../controllers/user/index')
+const router = express.Router();
+const route = userRouter({ router, makeExpressCallback });
 
 
-router.get("/", makeExpressCallback(fetchUsers))
-router.post("/create", makeExpressCallback(create))
-router.get("/:id", makeExpressCallback(fetchSingleUser))
-router.patch("/update/:id", makeExpressCallback(updateUserController))
-router.delete("/delete/:id", makeExpressCallback(deleteUserController))
-module.exports = router;
+const services = Object.freeze({
+    route
+})
+
+module.exports = services
+module.exports = router

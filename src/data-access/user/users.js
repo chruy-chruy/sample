@@ -1,4 +1,6 @@
 const connect = require('../../config/db')
+const jwt = require("jsonwebtoken");
+require('dotenv').config()
 
 const userDb = () => {
     return Object.freeze({
@@ -7,7 +9,8 @@ const userDb = () => {
         getSingleUser,
         isExisting,
         updateUser,
-        deleteUser
+        deleteUser,
+        loginUser
     })
 }
 
@@ -20,6 +23,18 @@ async function getUsers() {
         console.log("Error: ", error);
     }
 
+}
+
+async function loginUser({ username, password }) {
+    const db = await connect()
+    const data = [username, password]
+    try {
+        const sql = `SELECT * FROM users where username = $1 AND password = $2 AND status = 'active'`;
+        const result = await db.query(sql, data)
+        return result
+    } catch (error) {
+        console.log("Error: ", error);
+    }
 }
 
 async function getSingleUser({ userId }) {
