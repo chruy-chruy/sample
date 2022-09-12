@@ -13,7 +13,10 @@ const UC_createUser = ({ userDb, makeUserEntity }) => {
         const res = await userDb.makeUsers({
             username: userEntity.getUsername(),
             password: userEntity.getPassword(),
-            status: userEntity.getStatus()
+            status: userEntity.getStatus(),
+            first_name: userEntity.getFirstName(),
+            last_name: userEntity.getLastName(),
+            role: userEntity.getRole()
         })
             .catch(err => console.log(err));
 

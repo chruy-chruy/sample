@@ -6,9 +6,13 @@ const UC_updateUser = ({ userDb, updateUserEntity }) => {
             .catch(err => console.log(err));
 
         if (prevData.rowCount != 0) {
-            let entity = await updateUserEntity({ prevData, data });
+            const userEntity = await updateUserEntity({ prevData, data });
 
-            const res = await userDb.updateUser({ entity })
+            const res = await userDb.updateUser({
+                id: userEntity.getId(),
+                username: userEntity.getUsername(),
+                password: userEntity.getPassword()
+            })
                 .catch(err => console.log(err));
 
             if (res) {

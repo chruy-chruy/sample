@@ -21,7 +21,7 @@ const CON_getSingleUser = ({ getSingleUser }) => {
                 body: user
             };
         } catch (e) {
-            console.log(e)
+            console.log(e.message)
             return {
                 headers,
                 statusCode: 400,

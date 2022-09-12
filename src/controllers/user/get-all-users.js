@@ -7,6 +7,7 @@ const CON_getUser = ({ getUsers }) => {
             if (httpRequest.headers["Referer"]) {
                 source.referrer = httpRequest.headers["Referer"];
             }
+
             const result = await getUsers();
 
             return {
@@ -17,7 +18,7 @@ const CON_getUser = ({ getUsers }) => {
                 body: result
             };
         } catch (e) {
-            console.log(e)
+            console.log(e.message)
             return {
                 headers,
                 statusCode: 400,

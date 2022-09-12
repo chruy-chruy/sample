@@ -30,7 +30,7 @@ const updateUserController = ({ updateUser }) => {
             console.log(result.body)
             return result;
         } catch (e) {
-            console.log(e)
+            console.log(e.message)
             return {
                 headers,
                 statusCode: 400,

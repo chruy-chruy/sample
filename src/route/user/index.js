@@ -1,12 +1,12 @@
 const express = require("express");
 
-
 const makeExpressCallback = require('../../express-callback/index')
 
 const userRouter = require('./route')
+const verifyToken = require('../../middleware/jwt/verifyToken');
 
 const router = express.Router();
-const route = userRouter({ router, makeExpressCallback });
+const route = userRouter({ router, verifyToken, makeExpressCallback });
 
 
 const services = Object.freeze({

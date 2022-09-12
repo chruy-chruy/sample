@@ -1,5 +1,6 @@
 
 //users
+
 const {
     fetchUsers,
     create,
@@ -9,11 +10,10 @@ const {
     login
 } = require('../../controllers/user/index')
 
-const verifyToken = require('../../middleware/jwt/verifyToken');
 
-const userRouter = ({ router, makeExpressCallback }) => {
+const userRouter = ({ router, verifyToken, makeExpressCallback }) => {
     router.get("/", verifyToken, makeExpressCallback(fetchUsers))
-    router.post("/create", verifyToken, makeExpressCallback(create))
+    router.post("/", verifyToken, makeExpressCallback(create))
     router.get("/:id", verifyToken, makeExpressCallback(fetchSingleUser))
     router.patch("/update/:id", verifyToken, makeExpressCallback(updateUserController))
     router.delete("/delete/:id", verifyToken, makeExpressCallback(deleteUserController))
@@ -21,6 +21,7 @@ const userRouter = ({ router, makeExpressCallback }) => {
 
     return router
 }
+
 
 
 module.exports = userRouter

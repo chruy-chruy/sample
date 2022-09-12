@@ -15,18 +15,15 @@ const UC_loginUser = ({ userDb, loginUserEntity, generateToken }) => {
             password: userEntity.getPassword(),
         }).catch(err => console.log(err));
 
-        const result = res.rows
+        const user_data = res.rows
 
-        const token = generateToken(result)
-
-        // res[0].token = token
+        const token = generateToken(user_data)
 
         if (res.rowCount == 0) {
-
             throw new Error("Invalid Password");
         }
-        if (res.rowCount > 0) {
-            return { result, token: token }
+        else if (res.rowCount > 0) {
+            return { data: user_data, token: token }
         }
         else {
             throw new Error("Failed to login user.");

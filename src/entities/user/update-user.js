@@ -14,9 +14,9 @@ const updateUserEntity = ({ prevData, data }) => {
     }
 
     return Object.freeze({
-        id: id,
-        username: username,
-        password: password
+        getId: () => id,
+        getUsername: () => username,
+        getPassword: () => password,
 
     })
 
