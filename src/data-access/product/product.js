@@ -17,8 +17,8 @@ async function createProduct({ product_name, barcode, details, quantity, price, 
         const result = await db.query(sql, values)
         return result
     } catch (error) {
-        console.log(error.message)
-        return (error.message)
+        console.log(error)
+        return (error)
     }
 }
 
@@ -29,8 +29,8 @@ async function getProduct() {
         const result = await db.query(sql)
         return result.rows
     } catch (error) {
-        console.log(error.message)
-        return (error.message)
+        console.log(error)
+        return (error)
     }
 }
 

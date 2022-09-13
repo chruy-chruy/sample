@@ -11,13 +11,15 @@ const customerRoute = require("./route/customer");
 const supplierRoute = require("./route/supplier");
 const productRoute = require("./route/product");
 const deliveryRoute = require("./route/delivery");
-const product_deliveryRouter = require("./route/product&delivery");
+const product_deliveryRoute = require("./route/product&delivery");
+const orderRoute = require("./route/order");
 
 app.use("/api/users", userRoute);
 app.use("/api/customer", customerRoute);
 app.use("/api/supplier", supplierRoute);
 app.use("/api/product", productRoute);
 app.use("/api/delivery", deliveryRoute);
-app.use("/api/product-delivery", product_deliveryRouter);
+app.use("/api/product-delivery", product_deliveryRoute);
+app.use("/api/order", orderRoute);
 
 module.exports = app

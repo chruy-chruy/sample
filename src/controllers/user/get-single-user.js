@@ -4,9 +4,9 @@ const CON_getSingleUser = ({ getSingleUser }) => {
             "Content-Type": "application/json",
         }; try {
             //get the httprequest body
-            if (httpRequest.headers["Referer"]) {
-                source.referrer = httpRequest.headers["Referer"];
-            }
+            // if (httpRequest.headers["Referer"]) {
+            //     source.referrer = httpRequest.headers["Referer"];
+            // }
             const toView = {
                 id: httpRequest.params.id,
             }

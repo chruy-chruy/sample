@@ -4,9 +4,9 @@ const CON_getProduct = ({ getProduct }) => {
             "Content-Type": "application/json",
         }; try {
             //get the httprequest body
-            if (httpRequest.headers["Referer"]) {
-                source.referrer = httpRequest.headers["Referer"];
-            }
+            // if (httpRequest.headers["Referer"]) {
+            //     source.referrer = httpRequest.headers["Referer"];
+            // }
 
             const result = await getProduct();
 

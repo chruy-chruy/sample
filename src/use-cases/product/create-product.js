@@ -1,8 +1,9 @@
 const UC_createProduct = ({ productDb, makeProductEntity }) => {
     return async function createProduct(data) {
         let rowCount = 0
-        const { products, delivery_id } = data
         let checkArray = 0
+        const { products, delivery_id } = data
+
 
         //check all the enities per product array
         for (const product of products) {
