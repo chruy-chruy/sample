@@ -49,24 +49,10 @@ async function getSingleUser({ userId }) {
     }
 }
 
-async function makeUsers({
-    username,
-    password,
-    status,
-    first_name,
-    last_name,
-    role
-}) {
+async function makeUsers({ username, password, status, first_name, last_name, role }) {
+    const db = await connect()
+    const values = [username, password, status, first_name, last_name, role]
     try {
-        const db = await connect()
-        const values = [
-            username,
-            password,
-            status,
-            first_name,
-            last_name,
-            role]
-
         const sql = `INSERT INTO users(username,password,status,first_name,last_name,role)
                                 VALUES ($1,$2,$3,$4,$5,$6) RETURNING *`;
         try {
@@ -94,10 +80,15 @@ async function isExisting({ username }) {
     }
 }
 
-async function updateUser({ id, username, password }) {
+async function updateUser({ password, first_name, last_name, role, id }) {
     const db = await connect()
-    const params = [password, id]
-    const sql = `UPDATE users SET password = $1 WHERE id = $2 RETURNING *`;
+    const params = [password, first_name, last_name, role, id]
+    const sql = `UPDATE users SET 
+                    password = $1,
+                    first_name = $2,
+                    last_name = $3,
+                    role = $4
+                WHERE id = $5`;
     try {
         const result = await db.query(sql, params)
         return result.rows

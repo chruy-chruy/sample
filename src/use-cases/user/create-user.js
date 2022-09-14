@@ -21,7 +21,9 @@ const UC_createUser = ({ userDb, makeUserEntity }) => {
             .catch(err => console.log(err));
 
         if (res) {
-            return res
+            return "User Created succesfully"
+
+
         }
         else {
             throw new Error("Failed to register user.");

@@ -8,11 +8,11 @@ const query = () => {
     })
 }
 
-async function createCustomer({ name, contact, address, status }) {
+async function createCustomer({ name, contact, address, status, order_id }) {
     const db = await connect()
-    const values = [name, contact, address, status]
-    const sql = `INSERT INTO customer(name, contact, address, status)
-    VALUES($1,$2,$3,$4)`
+    const values = [name, contact, address, status, order_id]
+    const sql = `INSERT INTO customer(name, contact, address, status, order_id)
+    VALUES($1,$2,$3,$4,$5)`
     try {
         const result = await db.query(sql, values)
         return result

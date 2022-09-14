@@ -1,27 +1,24 @@
-const CON_createUser = ({ createUser }) => {
+const CON_getOrder = ({ getOrder }) => {
     return async function get(httpRequest) {
         const headers = {
             "Content-Type": "application/json",
-        };
-        try {
+        }; try {
             //get the httprequest body
-            const { source = {}, ...UserInfo } = httpRequest.body;
-            source.ip = httpRequest.ip;
-            source.browser = httpRequest.headers["User-agent"];
+            // if (httpRequest.headers["Referer"]) {
+            //     source.referrer = httpRequest.headers["Referer"];
+            // }
 
-            const res = await createUser(UserInfo);
-            const result = {
+            const result = await getOrder();
+
+            return {
                 headers: {
                     "Content-Type": "application/json"
                 },
                 statusCode: 200,
-                body: { res }
+                body: result
             };
-            console.log(result.body);
-            return result
-
         } catch (e) {
-            console.log(e.message)
+            console.log(e)
             return {
                 headers,
                 statusCode: 400,
@@ -33,4 +30,4 @@ const CON_createUser = ({ createUser }) => {
     }
 }
 
-module.exports = CON_createUser
+module.exports = CON_getOrder

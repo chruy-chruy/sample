@@ -1,4 +1,4 @@
-const CON_createOrder = ({ createOrder, createOrderDetails }) => {
+const CON_createOrder = ({ createOrder, createOrderDetails, createCustomer }) => {
     return async function get(httpRequest) {
         const headers = {
             "Content-Type": "application/json",
@@ -9,21 +9,25 @@ const CON_createOrder = ({ createOrder, createOrderDetails }) => {
             source.ip = httpRequest.ip;
             source.browser = httpRequest.headers["User-agent"];
 
-            //process create delivery trans first to get delivery_id
+            //process create delivery first to get delivery_id
             const order = await createOrder(Info.order)
 
-            //orders type=array
-            const order_details = Info.order_details
-
-            //pass data to createProduct with delivery_id
-            const data = {
+            //pass product details to createProduct with delivery_id
+            const order_details = {
                 order_id: order.order_id,
-                order_details
+                order_details: Info.order_details
             }
-            // console.log(data)
-
             //process create products
-            const orderDetails = await createOrderDetails(data)
+            const orderDetails = await createOrderDetails(order_details)
+
+            //pass customer details to createProduct with delivery_id
+            const customer = {
+                order_id: order.order_id,
+                customer: Info.customer
+            }
+
+            //process add customer
+            const addcustomer = await createCustomer(customer)
 
             const result = {
                 headers: {
@@ -31,8 +35,9 @@ const CON_createOrder = ({ createOrder, createOrderDetails }) => {
                 },
                 statusCode: 201,
                 body: {
-                    message: order.message + ' and ' + orderDetails
-
+                    order: order.message,
+                    order_details: orderDetails,
+                    customer: addcustomer
                 }
 
             };

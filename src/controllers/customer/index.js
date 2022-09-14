@@ -17,5 +17,6 @@ const CON_customer = Object.freeze({
 
 module.exports = CON_customer
 module.exports = {
-    create_customer, get_customer
+    create_customer,
+    get_customer
 }

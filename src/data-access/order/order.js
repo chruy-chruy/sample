@@ -4,7 +4,9 @@ const connect = require('../../config/db')
 const query = () => {
     return Object.freeze({
         createOrder,
-        createOrderDetails
+        createOrderDetails,
+        getOrder,
+        getOrderDetailsbyOrder
     })
 }
 
@@ -37,5 +39,28 @@ async function createOrderDetails({ product_name, barcode, quantity, price, stat
     }
 }
 
+async function getOrder() {
+    const db = await connect()
+    const sql = `SELECT * FROM orders WHERE status='active'`
+    try {
+        const result = await db.query(sql)
+        return result.rows
+    } catch (error) {
+        console.log(error.message)
+        return (error.message)
+    }
+}
+
+async function getOrderDetailsbyOrder({ order_id }) {
+    const db = await connect()
+    const id = [order_id.id]
+    try {
+        const sql = `SELECT * FROM order_details where order_id = $1`;
+        const res = await db.query(sql, id)
+        return res.rows
+    } catch (error) {
+        console.log("Error: ", error);
+    }
+}
 
 module.exports = query;

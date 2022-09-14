@@ -46,7 +46,8 @@ CREATE TABLE public.customer (
     contact bigint,
     address character varying(255),
     created_at timestamp without time zone DEFAULT now(),
-    status character varying(100)
+    status character varying(100),
+    order_id bigint
 );
 
 
@@ -134,10 +135,10 @@ ALTER SEQUENCE public.order_details_order_details_id_seq OWNED BY public.order_d
 
 CREATE TABLE public.orders (
     order_id bigint NOT NULL,
-    customer_name character varying(255),
     total_price double precision,
     created_at timestamp without time zone DEFAULT now(),
-    status character varying(100)
+    status character varying(100),
+    customer_name character varying
 );
 
 
@@ -332,10 +333,10 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: customer; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.customer (customer_id, name, contact, address, created_at, status) FROM stdin;
-8	steb	9269824521	KCC General Santos City	2022-09-07 15:48:39.284341	active
-9	troy	9269824521	Baluan General Santos City	2022-09-07 15:48:51.96984	active
-10	troy2	9269824521	Baluan General Santos City2	2022-09-07 17:25:44.583578	active
+COPY public.customer (customer_id, name, contact, address, created_at, status, order_id) FROM stdin;
+14	troy	9269824521	Baluan General Santos City2	2022-09-14 14:36:39.879349	active	\N
+15	troy	9269824521	Baluan General Santos City2	2022-09-14 14:38:49.949439	active	41
+16	troy	9269824521	Baluan General Santos City2	2022-09-14 14:42:04.880359	active	42
 \.
 
 
@@ -353,14 +354,12 @@ COPY public.delivery (delivery_id, supplier_name, date_received, created_at, sta
 --
 
 COPY public.order_details (order_details_id, order_id, barcode, product_name, quantity, price, created_at, status, total_price) FROM stdin;
-1	26	i3123123	intel i3 	20	1000	2022-09-13 09:42:18.685479	active	\N
-2	26	i3123123	intel i5 	20	1000	2022-09-13 09:42:18.687989	active	\N
-3	27	i3123123	intel i3 	20	1000	2022-09-13 09:42:39.670769	active	20000
-4	27	i3123123	intel i5 	20	1000	2022-09-13 09:42:39.675694	active	20000
-5	28	i3123123	intel i3 	20	1000	2022-09-13 09:44:01.613362	active	20000
-6	28	i3123123	intel i5 	20	1000	2022-09-13 09:44:01.615076	active	20000
-7	29	i3123123	intel i3 	20	1000	2022-09-13 09:44:32.287834	active	20000
-8	29	i3123123	intel i5 	20	1000	2022-09-13 09:44:32.291611	active	20000
+29	40	i3123123	intel i3 	20	1000	2022-09-14 14:36:39.87772	active	20000
+30	40	i3123123	intel i5 	20	1000	2022-09-14 14:36:39.878877	active	20000
+31	41	i3123123	intel i3 	20	1000	2022-09-14 14:38:49.94508	active	20000
+32	41	i3123123	intel i5 	20	1000	2022-09-14 14:38:49.948658	active	20000
+33	42	i3123123	intel i3 	20	1000	2022-09-14 14:42:04.876591	active	20000
+34	42	i3123123	intel i5 	20	1000	2022-09-14 14:42:04.879645	active	20000
 \.
 
 
@@ -368,36 +367,10 @@ COPY public.order_details (order_details_id, order_id, barcode, product_name, qu
 -- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.orders (order_id, customer_name, total_price, created_at, status) FROM stdin;
-1	qwe	123	2022-09-13 09:09:12.946659	qwe
-2	wew	10000	2022-09-13 09:09:54.877152	active
-3	qwe	123	2022-09-13 09:10:02.976468	qwe
-4	wew	10000	2022-09-13 09:10:46.89983	active
-5	wew	10000	2022-09-13 09:21:52.083973	active
-6	wew	10000	2022-09-13 09:22:47.558042	active
-7	wew	10000	2022-09-13 09:23:30.589629	active
-8	wew	10000	2022-09-13 09:24:04.522311	active
-9	wew	10000	2022-09-13 09:24:22.269841	active
-10	wew	10000	2022-09-13 09:25:31.155723	active
-11	wew	10000	2022-09-13 09:25:39.599149	active
-12	wew	10000	2022-09-13 09:26:11.401597	active
-13	wew	10000	2022-09-13 09:26:34.196336	active
-14	wew	10000	2022-09-13 09:26:55.212486	active
-15	wew	10000	2022-09-13 09:29:18.825934	active
-16	wew	10000	2022-09-13 09:29:56.480915	active
-17	wew	10000	2022-09-13 09:31:47.548838	active
-18	wew	10000	2022-09-13 09:31:59.741395	active
-19	wew	10000	2022-09-13 09:32:33.500586	active
-20	wew	10000	2022-09-13 09:37:16.744102	active
-21	wew	10000	2022-09-13 09:37:33.912314	active
-22	wew	10000	2022-09-13 09:38:11.903608	active
-23	wew	10000	2022-09-13 09:39:02.839778	active
-24	wew	10000	2022-09-13 09:39:14.234583	active
-25	wew	10000	2022-09-13 09:40:25.595962	active
-26	wew	10000	2022-09-13 09:42:18.675724	active
-27	wew	10000	2022-09-13 09:42:39.660427	active
-28	wew	10000	2022-09-13 09:44:01.603288	active
-29	wew	10000	2022-09-13 09:44:32.275573	active
+COPY public.orders (order_id, total_price, created_at, status, customer_name) FROM stdin;
+40	10000	2022-09-14 14:36:39.873531	active	troy
+41	10000	2022-09-14 14:38:49.93752	active	troy
+42	10000	2022-09-14 14:42:04.869262	active	troy
 \.
 
 
@@ -419,6 +392,7 @@ COPY public.supplier (supplier_id, supplier_name, address, contact, created_at, 
 6	troy	baluan	9123452871	2022-09-07 15:47:21.713031	active
 7	troy	baluan	9123452871	2022-09-07 15:47:40.591906	active
 11	troy shop	baluan General Santos City	91234548234	2022-09-08 09:57:38.279043	active
+12	troy shop	baluan General Santos City	91234548234	2022-09-13 10:56:57.533094	active
 \.
 
 
@@ -436,9 +410,12 @@ COPY public.users (id, username, password, status, date_created, updated_at, fir
 60	thel	thel123	active	2022-09-06 16:44:21.682458	\N	ethel	mahusay	Sales
 61	x	x123	active	2022-09-06 17:11:37.746568	\N	rex	qwe	Sales
 62	test	123	active	2022-09-07 17:21:07.122542	\N	test	qwwwe	Sales
-53	troy	admin123	active	2022-09-02 15:25:34.483515	2022-09-07 17:37:28.704761	\N	\N	\N
 63	jii	123	active	2022-09-07 17:40:02.938902	\N	jii	guiapal	Staff
 55	troy23	admin123	deleted	2022-09-02 15:28:26.968659	2022-09-07 17:41:03.845828	\N	\N	\N
+53	admin	admin123	active	2022-09-02 15:25:34.483515	2022-09-14 11:03:32.017804	troy	garidos	Admin
+64	asd	123	active	2022-09-14 13:51:11.990443	\N	jii	guiapal	Staff
+65	xzcz	123	active	2022-09-14 13:52:52.844965	\N	jii	guiapal	Staff
+66	sczxcz	123	active	2022-09-14 13:53:22.516088	\N	jii	guiapal	Staff
 \.
 
 
@@ -453,14 +430,14 @@ SELECT pg_catalog.setval('public.delivery_delivery_id_seq', 31, true);
 -- Name: order_details_order_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.order_details_order_details_id_seq', 8, true);
+SELECT pg_catalog.setval('public.order_details_order_details_id_seq', 34, true);
 
 
 --
 -- Name: order_order_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.order_order_id_seq', 29, true);
+SELECT pg_catalog.setval('public.order_order_id_seq', 42, true);
 
 
 --
@@ -474,14 +451,14 @@ SELECT pg_catalog.setval('public.product_product_id_seq', 245, true);
 -- Name: subjects_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.subjects_id_seq', 11, true);
+SELECT pg_catalog.setval('public.subjects_id_seq', 16, true);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 63, true);
+SELECT pg_catalog.setval('public.users_id_seq', 66, true);
 
 
 --

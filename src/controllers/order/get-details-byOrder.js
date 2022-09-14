@@ -1,31 +1,25 @@
-// const { updateUser } = require("../../use-cases/user");
-
-const updateUserController = ({ updateUser }) => {
+const CON_getOrderDetailsbyOrder = ({ getOrderDetailsbyOrder }) => {
     return async function get(httpRequest) {
         const headers = {
             "Content-Type": "application/json",
         }; try {
             //get the httprequest body
-            const { source = {}, ...UserInfo } = httpRequest.body;
-            if (httpRequest.headers["Referer"]) {
-                source.referrer = httpRequest.headers["Referer"];
-            }
-
-            const toUpdate = {
+            // if (httpRequest.headers["Referer"]) {
+            //     source.referrer = httpRequest.headers["Referer"];
+            // }
+            const order_id = {
                 id: httpRequest.params.id,
-                UserInfo
             }
 
-            const message = await updateUser(toUpdate);
-            const result = {
+            const order_details = await getOrderDetailsbyOrder(order_id);
+
+            return {
                 headers: {
                     "Content-Type": "application/json"
                 },
                 statusCode: 200,
-                body: message
+                body: order_details
             };
-            console.log(result.body)
-            return result;
         } catch (e) {
             console.log(e.message)
             return {
@@ -39,4 +33,4 @@ const updateUserController = ({ updateUser }) => {
     }
 }
 
-module.exports = updateUserController
+module.exports = CON_getOrderDetailsbyOrder

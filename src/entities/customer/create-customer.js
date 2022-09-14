@@ -1,11 +1,11 @@
-const makeCustomerEntity = ({ data }) => {
+const makeCustomerEntity = ({ customer_data }) => {
 
-    const { name, contact, address } = data;
+    const { customer_name, contact, address } = customer_data;
     const status = "active"
     // console.log(data);
 
 
-    if (!name) {
+    if (!customer_name) {
         throw new Error("name is required.");
     }
     if (!contact) {
@@ -17,7 +17,7 @@ const makeCustomerEntity = ({ data }) => {
 
 
     return Object.freeze({
-        getName: () => name,
+        getName: () => customer_name,
         getContact: () => contact,
         getAddress: () => address,
         getStatus: () => status,
